@@ -1,0 +1,9 @@
+[
+  {"stage": "Decide & Sequence", "item": "Worked example — FMS fleet scenario", "status": "In progress", "notes": "Gap #5"},
+  {"stage": "Engage", "item": "Worked example — FMS fleet scenario", "status": "Planned", "notes": "Gap #5"},
+  {"stage": "Define", "item": "Worked example — FMS fleet scenario", "status": "Planned", "notes": "Gap #5"},
+  {"stage": "Communicate", "item": "Worked example — FMS fleet scenario", "status": "Planned", "notes": "Gap #5"},
+  {"stage": "Accelerate", "item": "Fix ai-delivery-toolkit packaging defect", "status": "In progress", "notes": ""},
+  {"stage": "Ship", "item": "De-nest READMEs to repo root", "status": "Done", "notes": ""},
+  {"stage": "Trust", "item": "Build ai-adoption-gate repo", "status": "In progress", "notes": "CPMAI-aligned"}
+]
