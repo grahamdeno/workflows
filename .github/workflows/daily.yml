@@ -1,6 +1,9 @@
 name: Daily automation
 
 on:
+push:
+    paths:
+      - "data/board.json"
   schedule:
     - cron: "17 11 * * *"
   workflow_dispatch:
