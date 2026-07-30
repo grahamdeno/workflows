@@ -1,7 +1,7 @@
 name: Daily automation
 
 on:
-push:
+  push:
     paths:
       - "data/board.json"
   schedule:
