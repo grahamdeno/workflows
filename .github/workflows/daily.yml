@@ -5,7 +5,7 @@ on:
     paths:
       - "data/board.json"
   schedule:
-    - cron: "54 2 * * *"
+    - cron: "58 2 * * *"
   workflow_dispatch:
 
 permissions:
