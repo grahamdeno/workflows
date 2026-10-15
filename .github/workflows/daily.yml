@@ -5,7 +5,8 @@ on:
     paths:
       - "data/board.json"
   schedule:
-    - cron: "58 2 * * *"
+    # Wakes hourly; the gate step decides which hours actually run.
+    - cron: "17 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -15,10 +16,30 @@ jobs:
   daily:
     runs-on: ubuntu-latest
     steps:
+      - name: Decide whether to run this hour
+        id: gate
+        env:
+          SALT: ${{ secrets.SCHEDULE_SALT }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          python3 - <<'EOF'
+          import datetime, os, random
+          now = datetime.datetime.now(datetime.timezone.utc)
+          r = random.Random(now.strftime("%Y-%m-%d") + os.environ.get("SALT", ""))
+          n = r.randint(1, 9)
+          hours = r.sample(range(24), n)
+          go = os.environ["EVENT"] != "schedule" or now.hour in hours
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"run={'true' if go else 'false'}\n")
+          print(f"Today: {n} runs at UTC hours {sorted(hours)}; this hour runs: {go}")
+          EOF
       - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'true'
       - name: Run daily task
+        if: steps.gate.outputs.run == 'true'
         run: python scripts/daily_update.py
       - name: Commit if changed
+        if: steps.gate.outputs.run == 'true'
         run: |
           git config user.name "grahamdeno"
           git config user.email "grahamdeno@users.noreply.github.com"
